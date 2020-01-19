@@ -10,11 +10,15 @@
 
 #include "ay_reg.h"
 
+struct aye_cfg {
+    uint16_t port;
+};
+
 class aye : public QWidget {
 Q_OBJECT
 
 public:
-    explicit aye (QWidget *parent = nullptr);
+    explicit aye (QWidget *parent, aye_cfg *cfg);
 
 private slots:
     void new_connection ();

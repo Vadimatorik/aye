@@ -4,16 +4,19 @@
 #include <QNetworkDatagram>
 #include <QByteArray>
 
-aye::aye (QWidget *parent) : QWidget(parent) {
+aye::aye (QWidget *parent, aye_cfg *cfg) : QWidget(parent) {
     QHBoxLayout *l = new QHBoxLayout(this);
     l->addWidget(&this->ay);
 
-    this->server = new QTcpServer(this);
+    if ((this->server = new QTcpServer(this)) == nullptr) {
+        exit(ENOMEM);
+    }
 
-    this->socket = new QTcpSocket(this);
+    if ((this->socket = new QTcpSocket(this)) == nullptr) {
+        exit(ENOMEM);
+    };
 
-
-    if (!this->server->listen(QHostAddress::LocalHost, 58000)) {
+    if (!this->server->listen(QHostAddress::LocalHost, cfg->port)) {
         exit(errno);
     }
 

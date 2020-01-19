@@ -14,7 +14,7 @@ void aye::server_read () {
     this->data.append(this->socket->read(this->socket->bytesAvailable()));
     while (this->data.size() > 2) {
 
-        
+
         this->data.remove(0, 2);
     }
 }
