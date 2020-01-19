@@ -12,9 +12,14 @@ void aye::client_disconnected () {
 
 void aye::server_read () {
     this->data.append(this->socket->read(this->socket->bytesAvailable()));
-    while (this->data.size() > 2) {
+    while (this->data.size() > sizeof(socket_ay_msg_t)) {
+        socket_ay_msg_t *msg = reinterpret_cast<socket_ay_msg_t *>(this->data.data());
+        if (msg->type == CODE_AY_REG) {
+            this->ay.set_reg(msg->data);
+        } else {
+            this->ay.set_data(msg->data);
+        }
 
-
-        this->data.remove(0, 2);
+        this->data.remove(0, sizeof(socket_ay_msg_t));
     }
 }

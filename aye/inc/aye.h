@@ -30,6 +30,16 @@ private:
     QTcpSocket *socket = nullptr;
 
 private:
+    static const uint8_t CODE_AY_REG = 0;
+    static const uint8_t CODE_AY_DATA = 1;
+
+    struct __attribute__((packed)) socket_ay_msg_t {
+        uint32_t time;
+        uint8_t type;
+        uint8_t data;
+    };
+
+private:
     QByteArray data;
 
 private:

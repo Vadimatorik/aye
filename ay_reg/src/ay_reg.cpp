@@ -79,3 +79,19 @@ ay_reg::ay_reg (QWidget *parent) : QWidget(parent) {
     main_layout->addWidget(&this->hold_mode_name, 13, 3);
     main_layout->addWidget(&this->hold_mode, 13, 4);
 }
+
+void ay_reg::set_reg (uint8_t reg) {
+    QPalette palette;
+    palette.setColor(QPalette::Base,Qt::white);
+    palette.setColor(QPalette::Text,Qt::black);
+
+    this->reg_val[this->cur_reg].setPalette(palette);
+
+    this->cur_reg = reg;
+    palette.setColor(QPalette::Base,Qt::green);
+    this->reg_val[this->cur_reg].setPalette(palette);
+}
+
+void ay_reg::set_data (uint8_t data) {
+    this->reg_val[this->cur_reg].setText("0x" + QString::number(data, 16));
+}
