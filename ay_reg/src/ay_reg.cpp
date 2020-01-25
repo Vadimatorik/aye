@@ -51,9 +51,9 @@ ay_reg::ay_reg (QWidget *parent) : QWidget(parent) {
 
         this->ch_tone_val[i].setReadOnly(true);
         this->ch_amplitude_val[i].setReadOnly(true);
-        this->ch_amplitude_mode[i].setCheckable(false);
-        this->ch_noise_mode[i].setCheckable(false);
-        this->ch_tone_mode[i].setCheckable(false);
+   //     this->ch_amplitude_mode[i].setCheckable(false);
+   //     this->ch_noise_mode[i].setCheckable(false);
+   //     this->ch_tone_mode[i].setCheckable(false);
     }
 
     this->ch_noise_name.setText("Noise");
@@ -80,29 +80,29 @@ ay_reg::ay_reg (QWidget *parent) : QWidget(parent) {
         main_layout->addWidget(&this->port_out_mode[i], i + 8, 4);
         main_layout->addWidget(&this->port_in_mode[i], i + 8, 5);
 
-        this->port_out_mode[i].setCheckable(false);
-        this->port_in_mode[i].setCheckable(false);
+ //       this->port_out_mode[i].setCheckable(false);
+  //      this->port_in_mode[i].setCheckable(false);
     }
 
     this->continue_mode_name.setText("Continue\nmode");
     main_layout->addWidget(&this->continue_mode_name, 11, 3);
     main_layout->addWidget(&this->continue_mode, 11, 4);
-    this->continue_mode.setCheckable(false);
+ //   this->continue_mode.setCheckable(false);
 
     this->attack_mode_name.setText("Attack\nmode");
     main_layout->addWidget(&this->attack_mode_name, 12, 3);
     main_layout->addWidget(&this->attack_mode, 12, 4);
-    this->attack_mode.setCheckable(false);
+   // this->attack_mode.setCheckable(false);
 
     this->alternate_mode_name.setText("Alternate\nmode");
     main_layout->addWidget(&this->alternate_mode_name, 13, 3);
     main_layout->addWidget(&this->alternate_mode, 13, 4);
-    this->alternate_mode.setCheckable(false);
+   // this->alternate_mode.setCheckable(false);
 
     this->hold_mode_name.setText("Hold\nmode");
     main_layout->addWidget(&this->hold_mode_name, 14, 3);
     main_layout->addWidget(&this->hold_mode, 14, 4);
-    this->hold_mode.setCheckable(false);
+    //this->hold_mode.setCheckable(false);
 
     this->update_ch_tone(channel_name::a);
     this->update_ch_tone(channel_name::b);
@@ -214,19 +214,19 @@ void ay_reg::update_envelope_period () {
 
 void ay_reg::update_enable () {
     uint8_t r = this->reg_val[7].text().toUInt(nullptr, 16);
-    this->ch_tone_mode[0].setChecked(static_cast<bool>(!(r & (1u << 0u))));
-    this->ch_tone_mode[1].setChecked(static_cast<bool>(!(r & (1u << 1u))));
-    this->ch_tone_mode[2].setChecked(static_cast<bool>(!(r & (1u << 2u))));
+    this->ch_tone_mode[0].setChecked(!static_cast<bool>(r & (1u << 0u)));
+    this->ch_tone_mode[1].setChecked(!static_cast<bool>(r & (1u << 1u)));
+    this->ch_tone_mode[2].setChecked(!static_cast<bool>(r & (1u << 2u)));
 
-    this->ch_noise_mode[0].setChecked(static_cast<bool>(!(r & (1u << 3u))));
-    this->ch_noise_mode[1].setChecked(static_cast<bool>(!(r & (1u << 4u))));
-    this->ch_noise_mode[2].setChecked(static_cast<bool>(!(r & (1u << 5u))));
+    this->ch_noise_mode[0].setChecked(!static_cast<bool>(r & (1u << 3u)));
+    this->ch_noise_mode[1].setChecked(!static_cast<bool>(r & (1u << 4u)));
+    this->ch_noise_mode[2].setChecked(!static_cast<bool>(r & (1u << 5u)));
 
     this->port_in_mode[0].setChecked(static_cast<bool>(r & (1u << 6u)));
     this->port_in_mode[1].setChecked(static_cast<bool>(r & (1u << 6u)));
 
-    this->port_out_mode[0].setChecked(static_cast<bool>(!(r & (1u << 7u))));
-    this->port_out_mode[1].setChecked(static_cast<bool>(!(r & (1u << 7u))));
+    this->port_out_mode[0].setChecked(!static_cast<bool>(r & (1u << 7u)));
+    this->port_out_mode[1].setChecked(!static_cast<bool>(r & (1u << 7u)));
 }
 
 void ay_reg::envelope_shaper_cycle () {
@@ -264,12 +264,12 @@ void ay_reg::set_data (uint8_t data) {
 
             case 2:
             case 3:
-                this->update_ch_tone(channel_name::a);
+                this->update_ch_tone(channel_name::b);
                 break;
 
             case 4:
             case 5:
-                this->update_ch_tone(channel_name::a);
+                this->update_ch_tone(channel_name::c);
                 break;
 
             case 6:
