@@ -22,6 +22,7 @@ file(GLOB ${PROJECT_NAME}_SRC
         "aye/inc/aye.h")
 
 add_executable(${PROJECT_NAME} ${${PROJECT_NAME}_SRC})
+target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_14)
 
 target_include_directories(${PROJECT_NAME} PRIVATE
         "aye/inc"
