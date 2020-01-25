@@ -88,10 +88,15 @@ void ay_reg::set_reg (uint8_t reg) {
     this->reg_val[this->cur_reg].setPalette(palette);
 
     this->cur_reg = reg;
-    palette.setColor(QPalette::Base,Qt::green);
-    this->reg_val[this->cur_reg].setPalette(palette);
+
+    if (reg < this->REG_NUM) {
+        palette.setColor(QPalette::Base,Qt::green);
+        this->reg_val[this->cur_reg].setPalette(palette);
+    }
 }
 
 void ay_reg::set_data (uint8_t data) {
-    this->reg_val[this->cur_reg].setText("0x" + QString::number(data, 16));
+    if (this->cur_reg < this->REG_NUM) {
+        this->reg_val[this->cur_reg].setText("0x" + QString::number(data, 16));
+    }
 }
