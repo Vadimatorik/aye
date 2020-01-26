@@ -67,7 +67,7 @@ int main (int argc, char *argv[]) {
     if ((rv = check_cmd_line_param(&e_cfg)) != 0) {
         return rv;
     }
-
+    
     aye *e = new aye(nullptr, &e_cfg);
     e->show();
     return app.exec();

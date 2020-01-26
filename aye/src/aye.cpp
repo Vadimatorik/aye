@@ -5,8 +5,11 @@
 #include <QByteArray>
 
 aye::aye (QWidget *parent, aye_cfg *cfg) : QWidget(parent) {
-    QHBoxLayout *l = new QHBoxLayout(this);
+    QVBoxLayout *l = new QVBoxLayout(this);
     l->addWidget(&this->ay);
+    l->addWidget(&this->save);
+
+    this->save.setText("Save");
 
     if ((this->server = new QTcpServer(this)) == nullptr) {
         exit(ENOMEM);
@@ -21,5 +24,6 @@ aye::aye (QWidget *parent, aye_cfg *cfg) : QWidget(parent) {
     }
 
     connect(this->server, SIGNAL(newConnection()), this, SLOT(new_connection()));
+    connect(&this->save, SIGNAL (released()),this, SLOT (save_handler()));
 }
 
